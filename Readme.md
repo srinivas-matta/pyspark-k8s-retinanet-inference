@@ -1,5 +1,5 @@
 
- ### Deploying Spark on Kubernetes using Sparkoperator    
+ ### Scaling Retinanet Inference using Spark on Kubernetes     
  Dependencies:    
 * Docker     
 * Minikube     
