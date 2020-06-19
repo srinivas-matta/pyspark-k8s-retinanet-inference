@@ -20,8 +20,8 @@ if __name__ == '__main__':
     print("model_name : ", model_name)
 
     spark.sparkContext.addFile(model_path)
-
     spark.sparkContext.addPyFile("/app/model_pool.py")
+
     print("distributing model file to executor.")
 
     ImageFields = ["origin", "height", "width", "nChannels", "mode", "data"]
@@ -86,7 +86,7 @@ if __name__ == '__main__':
             for box, score, label in zip(boxes[0], scores[0], labels[0]):
                 # scores are sorted so we can break
 
-                if score < float("0.2"):
+                if score < float("0.5"):
                     break
                 color = label_color(label)
                 b = box.astype(int)
