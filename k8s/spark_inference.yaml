@@ -1,0 +1,59 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: pyspark-retinanet-inference
+  namespace: spark-apps
+spec:
+  type: Python
+  pythonVersion: "2"
+  mode: cluster
+  image: "localhost:5000/spark_inference_image:1.0"
+  imagePullPolicy: Never
+  mainApplicationFile: local:///app/SparkStreamingInferenceApp.py
+  sparkVersion: "2.4.5"
+  sparkConf:
+    "spark.kubernetes.authenticate.driver.serviceAccountName": "spark-spark"
+  restartPolicy:
+    type: OnFailure
+    onFailureRetries: 10
+    onFailureRetryInterval: 10
+    onSubmissionFailureRetries: 10
+    onSubmissionFailureRetryInterval: 20
+  driver:
+    securityContext:
+      runAsUser: 0
+    cores: 1
+    coreLimit: "1200m"
+    memory: "2024m"
+    labels:
+      version: 2.4.5
+    serviceAccount: spark-spark
+    volumeMounts:
+      - name: input-images
+        mountPath: /mnt/input-images
+      - name: output-images
+        mountPath: /mnt/output-images
+  executor:
+    securityContext:
+      runAsUser: 0
+    cores: 1
+    instances: 2
+    memory: "2024m"
+    labels:
+      version: 2.4.5
+    serviceAccount: spark-spark
+    volumeMounts:
+      - name: input-images
+        mountPath: /mnt/input-images
+      - name: output-images
+        mountPath: /mnt/output-images
+  volumes:
+  - name: input-images
+    hostPath:
+        path: /input-images
+  - name: output-images
+    hostPath:
+        path: /output-images
+
+
+
