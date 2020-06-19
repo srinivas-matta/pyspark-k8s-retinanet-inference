@@ -27,10 +27,10 @@ Run these steps in sequential manner,
 * Creating Spark cluster on Kubernetes using sparkoperator
 `$ 5_create_spark_k8s_cluster.sh`
 
-* Deleting pods & resource .
- `$ 6_delete_spark_k8s_cluster.sh `  
+* Deleting pods & resource
+ `$ 6_delete_spark_k8s_cluster.sh`  
  
  
 Note :
-Copy 'resnet50_coco_best_v2.1.0.h5'  to 'model'  folder.
-'resnet50_coco_best_v2.1.0.h5' can be downloaded here: https://github.com/fizyr/keras-retinanet/releases
+Copy 'resnet50_coco_best_v2.1.0.h5' to 'model' folder
+'resnet50_coco_best_v2.1.0.h5' can be downloaded here : https://github.com/fizyr/keras-retinanet/releases
