@@ -61,7 +61,7 @@ if __name__ == '__main__':
         partition_id = ctx.partitionId()
 
         from app.model_pool import ModelPool
-        model = ModelPool.get_model_for_partition_id( model_name)
+        model = ModelPool.get_model(model_name)
         print("partition_id : ", partition_id , "  model : ", model)
 
         for img_row in iterator:
