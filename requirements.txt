@@ -4,10 +4,7 @@ kafka-python==1.4.7
 keras-retinanet==0.5.0
 opencv-python==4.1.1.26
 Pillow==6.2.1
-sparkdl==0.2.2
 tensorboard==1.14.0
-tensorflow==1.14.0rc0
-tensorflowonspark==1.4.4
-tensorframes==0.2.9
+tensorflow==1.14.0
 
 
