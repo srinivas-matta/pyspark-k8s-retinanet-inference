@@ -26,9 +26,7 @@ COPY ./model/resnet50_coco_best_v2.1.0.h5  /app
 
 ENV PYTHONPATH "${PYTHONPATH}:/"
 
-#docker build -t spark_inference_image:v1  .
-#docker run -v $(pwd)/app:/app -v $(pwd)/input_raw_images:/mnt/input-images -v $(pwd)/output-images:/mnt/output-images  --entrypoint "sh" spark_inference_image:v1
-#spark-submit --master local SparkKerasTest.py
+
 
 
 
