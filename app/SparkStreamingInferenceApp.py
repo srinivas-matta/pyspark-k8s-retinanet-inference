@@ -15,10 +15,11 @@ if __name__ == '__main__':
     spark = SparkSession.builder.getOrCreate()
 
     model_path = "/app/resnet50_coco_best_v2.1.0.h5"
+    input_images_dir = "/mnt/input-images"
+    output_images_dir = "/mnt/output-images"
+
     model_name = os.path.basename(model_path)
-
     print("model_name : ", model_name)
-
     spark.sparkContext.addFile(model_path)
     spark.sparkContext.addPyFile("/app/model_pool.py")
 
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 
     image_schema = StructType().add("image", ImageSchema)
 
-    image_df = spark.readStream.format("image").schema(image_schema).load("/mnt/input-images")
+    image_df = spark.readStream.format("image").schema(image_schema).load(input_images_dir)
 
     labels_to_names = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane', 5: 'bus', 6: 'train',
                        7: 'truck', 8: 'boat', 9: 'traffic light', 10: 'fire hydrant', 11: 'stop sign',
@@ -54,9 +55,9 @@ if __name__ == '__main__':
                        72: 'refrigerator', 73: 'book', 74: 'clock', 75: 'vase', 76: 'scissors', 77: 'teddy bear',
                        78: 'hair drier', 79: 'toothbrush'}
 
-    def processImg(iterator):
+    def detect_objects(iterator):
 
-        print("processing image..")
+        print("detecting objects in the image..")
         ctx = TaskContext()
         partition_id = ctx.partitionId()
 
@@ -94,12 +95,12 @@ if __name__ == '__main__':
                 caption = "{} {:.3f}".format(labels_to_names[label], score)
                 draw_caption(resized_image, b, caption)
 
-            cv2.imwrite("/mnt/output-images/" + filename, resized_image)
+            cv2.imwrite(output_images_dir+ "/" + filename, resized_image)
 
 
     def process_batch_df(image_df, batch_id):
         print("batch_id : ", batch_id)
-        image_df.select("image.height", "image.width", "image.nChannels", "image.mode", "image.origin", "image.data").foreachPartition(processImg)
+        image_df.select("image.height", "image.width", "image.nChannels", "image.mode", "image.origin", "image.data").foreachPartition(detect_objects)
 
 
     query = image_df \
