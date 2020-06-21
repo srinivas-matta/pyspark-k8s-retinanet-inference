@@ -3,12 +3,19 @@
  Dependencies:    
 * Docker     
 * Minikube     
-* Spark     
+* Spark    
+* helm 
     
   
 Minikube used to run a single-node Kubernetes cluster locally.    
   
 Run these steps in sequential manner,  
+  
+### Note :  
+Copy 'resnet50_coco_best_v2.1.0.h5' to 'model' folder.   
+  
+'resnet50_coco_best_v2.1.0.h5' can be downloaded here : https://github.com/fizyr/keras-retinanet/releases
+
   
 * Default,  Minikube memory settings are not enough for Spark jobs, need to be increase the memory and cpu cores  
   
@@ -34,7 +41,3 @@ Run these steps in sequential manner,
   
    `$ 6_delete_spark_k8s_cluster.sh`    
    
- Note :  
-Copy 'resnet50_coco_best_v2.1.0.h5' to 'model' folder.   
-  
-'resnet50_coco_best_v2.1.0.h5' can be downloaded here : https://github.com/fizyr/keras-retinanet/releases
