@@ -2,7 +2,7 @@ Cython
 numpy
 kafka-python==1.4.7
 keras-retinanet==0.5.0
-opencv-python==4.1.1.26
+opencv-python==4.2.0.32
 Pillow==6.2.2
 #tensorflow==1.15.0
 
